@@ -56,15 +56,16 @@ exports.handler = async function (event: APIGatewayEvent, context: Context): Pro
             } as AWS.SQS.SendMessageRequest;
 
             try {
-                let sendSqsMessage = await sqs.sendMessage(sqsOrderData) as AWS.SQS.SendMessageResult;
-                console.log(`OrdersSvc | SUCCESS: ${sendSqsMessage.MessageId}`);
+                const sendSqsMessage = await sqs.sendMessage(sqsOrderData);
+                const data = await sendSqsMessage.promise()
+                console.log(`OrdersSvc | SUCCESS: ${data.MessageId}`);
 
                 return {
                     statusCode: 200,
                     headers: {},
                     body: {
                         message: "Thank you for your order. Check you inbox for the confirmation email.",
-                        eventId: sendSqsMessage.MessageId
+                        eventId: data.MessageId
                     }
                 }
             } catch (err) {
