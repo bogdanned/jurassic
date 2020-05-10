@@ -1,5 +1,5 @@
 import { APIGatewayEvent, Context } from "aws-lambda"
-const AWS = require('aws-sdk');
+import AWS from 'aws-sdk';
 
 
 exports.handler = async function (event: APIGatewayEvent, context: Context): Promise<any> {
