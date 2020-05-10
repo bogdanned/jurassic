@@ -1,7 +1,7 @@
 import { APIGatewayEvent, Context } from "aws-lambda"
 
 
-export default async function (event: APIGatewayEvent, context: Context): Promise<any> {
+exports.handler = async function (event: APIGatewayEvent, context: Context): Promise<any> {
     try {
         var method = event.httpMethod;
 
@@ -40,3 +40,4 @@ export default async function (event: APIGatewayEvent, context: Context): Promis
 }
 
 
+export default exports.handler

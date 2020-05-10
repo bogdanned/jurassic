@@ -21,8 +21,8 @@ export default class CdkServerlessStack extends cdk.Stack {
         // orders lambda handler
         const handler = new lambda.Function(this, "OrderHandler", {
             runtime: lambda.Runtime.NODEJS_10_X, // So we can use async in widget.js
-            code: lambda.Code.asset("src"),
-            handler: "dist/src/orders.js",
+            code: lambda.Code.asset("dist/src"),
+            handler: "orders.handler",
             // environment: {
             //     BUCKET: bucket.bucketName
             // }
