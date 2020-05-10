@@ -1,0 +1,1 @@
+The same service migrated to `lambda`.
