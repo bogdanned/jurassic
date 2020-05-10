@@ -1,0 +1,14 @@
+{
+  "name": "sqs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-orders-svc": "node ./orders/index.js 8081",
+    "start-emails-svc": "node ./emails/index.js",
+    "start": "npm-run-all -p -r start-orders-svc"
+  },
+  "author": "",
+  "license": "ISC"
+}

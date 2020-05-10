@@ -1,0 +1,1 @@
+A simple mailing service
