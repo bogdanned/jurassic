@@ -30,5 +30,20 @@ export class WidgetService extends core.Construct {
         });
 
         api.root.addMethod("GET", getWidgetsIntegration); // GET /
+
+        const widget = api.root.addResource("{id}");
+
+        // Add new widget to bucket with: POST /{id}
+        const postWidgetIntegration = new apigateway.LambdaIntegration(handler);
+
+        // Get a specific widget from bucket with: GET /{id}
+        const getWidgetIntegration = new apigateway.LambdaIntegration(handler);
+
+        // Remove a specific widget from the bucket with: DELETE /{id}
+        const deleteWidgetIntegration = new apigateway.LambdaIntegration(handler);
+
+        widget.addMethod("POST", postWidgetIntegration); // POST /{id}
+        widget.addMethod("GET", getWidgetIntegration); // GET /{id}
+        widget.addMethod("DELETE", deleteWidgetIntegration); // DELETE /{id}
     }
 }
