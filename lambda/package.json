@@ -4,14 +4,17 @@
   "description": "A serverless event-driven mail sender.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc "
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-cdk/aws-apigateway": "^1.38.0",
     "@aws-cdk/aws-dynamodb": "^1.38.0",
     "@types/aws-lambda": "^8.10.51",
     "@types/node": "^13.13.5",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "typescript": "^3.6.3"
   }
 }

@@ -1,12 +1,15 @@
 import * as cdk from '@aws-cdk/core';
 import OrderService from './orderService';
+import * as dotenv from 'dotenv';
+dotenv.config()
 
-export class CdkServerlessStack extends cdk.Stack {
-    constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
-        super(scope, id, props);
 
-        // The code that defines your stack goes here
-        new OrderService(this, 'Orders');
+const app = new cdk.App();
 
-    }
-}
+new OrderService(app, 'ServerlessOrderSevice',
+    {
+        env: {
+            region: process.env.AWS_REGION,
+            account: process.env.AWS_ACCOUNT
+        }
+    });

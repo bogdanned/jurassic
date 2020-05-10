@@ -2,11 +2,9 @@ import * as cdk from "@aws-cdk/core";
 import * as apigateway from "@aws-cdk/aws-apigateway";
 import * as lambda from "@aws-cdk/aws-lambda";
 // import * as s3 from "@aws-cdk/aws-s3";
-import * as dotenv from 'dotenv';
 
 // import * as dynamodb from '@aws-cdk/aws-dynamodb';
 
-dotenv.config()
 
 export default class CdkServerlessStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -24,7 +22,7 @@ export default class CdkServerlessStack extends cdk.Stack {
         const handler = new lambda.Function(this, "OrderHandler", {
             runtime: lambda.Runtime.NODEJS_10_X, // So we can use async in widget.js
             code: lambda.Code.asset("src"),
-            handler: "orders",
+            handler: "dist/src/orders.js",
             // environment: {
             //     BUCKET: bucket.bucketName
             // }
@@ -38,15 +36,15 @@ export default class CdkServerlessStack extends cdk.Stack {
             handler
         });
 
-        api.root.addMethod('ANY');
+        // api.root.addMethod('ANY');
 
-        const orders = api.root.addResource('orders');
-        orders.addMethod('GET');
-        orders.addMethod('POST');
+        // const orders = api.root.addResource('orders');
+        // orders.addMethod('GET');
+        // orders.addMethod('POST');
 
-        const order = orders.addResource('{order_id}');
-        order.addMethod('GET');
-        order.addMethod('DELETE');
+        // const order = orders.addResource('{order_id}');
+        // order.addMethod('GET');
+        // order.addMethod('DELETE');
 
     }
 }
