@@ -1,5 +1,5 @@
 import { APIGatewayEvent, Context } from "aws-lambda"
-import AWS from 'aws-sdk';
+import * as AWS from 'aws-sdk';
 
 
 exports.handler = async function (event: APIGatewayEvent, context: Context): Promise<any> {
@@ -22,13 +22,13 @@ exports.handler = async function (event: APIGatewayEvent, context: Context): Pro
             var orderData = {
                 userEmail: "default@default.com",
                 itemName: "default product",
-                itemPrice: 0,
-                itemsQuantity: 19,
+                itemPrice: "0",
+                itemsQuantity: "19",
                 ...JSON.parse(event.body || "{}")
             }
             const sqs = new AWS.SQS();
 
-            const queueUrl = process.env.SQS_QUEUE_URL;
+            const queueUrl = process.env.orderQueueUrl;
 
             let sqsOrderData = {
                 MessageAttributes: {
@@ -53,19 +53,34 @@ exports.handler = async function (event: APIGatewayEvent, context: Context): Pro
                 MessageDeduplicationId: String(new Date().getTime()),
                 MessageGroupId: "UserOrders",
                 QueueUrl: queueUrl
-            };
+            } as AWS.SQS.SendMessageRequest;
 
             let sendSqsMessage = sqs.sendMessage(sqsOrderData).promise();
 
 
             sendSqsMessage.then((data: any) => {
                 console.log(`OrdersSvc | SUCCESS: ${data.MessageId}`);
-                return "Thank you for your order. Check you inbox for the confirmation email.";
+                return {
+                    statusCode: 200,
+                    headers: {},
+                    body: {
+                        message: "Thank you for your order. Check you inbox for the confirmation email.",
+                        eventId: data.MessageId
+                    }
+                }
             }).catch((err: Error) => {
                 console.log(`OrdersSvc | ERROR: ${err}`);
 
                 // Send email to emails API
-                return "We ran into an error. Please try again.";
+                return {
+                    statusCode: 500,
+                    headers: {},
+                    body: {
+                        message: "We ran into an error. Please try again."
+                    }
+                }
+
+
             });
         }
 

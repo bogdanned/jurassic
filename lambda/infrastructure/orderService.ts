@@ -37,6 +37,7 @@ export default class CdkServerlessStack extends cdk.Stack {
         });
 
         table.grantFullAccess(handler)
+        queue.grantSendMessages(handler)
 
         // bucket.grantReadWrite(handler); // was: handler.role);
 
