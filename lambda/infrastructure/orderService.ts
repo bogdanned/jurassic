@@ -1,9 +1,10 @@
 import * as cdk from "@aws-cdk/core";
 import * as apigateway from "@aws-cdk/aws-apigateway";
 import * as lambda from "@aws-cdk/aws-lambda";
-// import * as s3 from "@aws-cdk/aws-s3";
+import * as sqs from '@aws-cdk/aws-sqs';
+import * as dynamodb from '@aws-cdk/aws-dynamodb';
 
-// import * as dynamodb from '@aws-cdk/aws-dynamodb';
+// import * as s3 from "@aws-cdk/aws-s3";
 
 
 export default class CdkServerlessStack extends cdk.Stack {
@@ -13,20 +14,29 @@ export default class CdkServerlessStack extends cdk.Stack {
         // bucket to store lambda code
         // const bucket = new s3.Bucket(this, "Lambda Store");
 
+        // queue with orders
+        const queue = new sqs.Queue(this, 'OrderQueue', {
+            fifo: true,
+        });
+
         // table to store orders
-        // const table = new dynamodb.Table(this, 'Table', {
-        //     partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING }
-        // });
+        const table = new dynamodb.Table(this, 'Table', {
+            partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING }
+        });
 
         // orders lambda handler
         const handler = new lambda.Function(this, "OrderHandler", {
             runtime: lambda.Runtime.NODEJS_10_X, // So we can use async in widget.js
             code: lambda.Code.asset("dist/src"),
             handler: "orders.handler",
-            // environment: {
-            //     BUCKET: bucket.bucketName
-            // }
+            environment: {
+                // BUCKET: bucket.bucketName,
+                orderTableUrl: table.tableName,
+                orderQueueUrl: queue.queueUrl
+            }
         });
+
+        table.grantFullAccess(handler)
 
         // bucket.grantReadWrite(handler); // was: handler.role);
 
