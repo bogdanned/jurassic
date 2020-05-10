@@ -63,10 +63,10 @@ exports.handler = async function (event: APIGatewayEvent, context: Context): Pro
                 return {
                     statusCode: 200,
                     headers: {},
-                    body: {
+                    body: JSON.stringify({
                         message: "Thank you for your order. Check you inbox for the confirmation email.",
                         eventId: data.MessageId
-                    }
+                    })
                 }
             } catch (err) {
                 console.log(`OrdersSvc | ERROR: ${err}`);
