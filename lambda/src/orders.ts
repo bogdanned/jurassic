@@ -55,20 +55,19 @@ exports.handler = async function (event: APIGatewayEvent, context: Context): Pro
                 QueueUrl: queueUrl
             } as AWS.SQS.SendMessageRequest;
 
-            let sendSqsMessage = sqs.sendMessage(sqsOrderData).promise();
+            try {
+                let sendSqsMessage = await sqs.sendMessage(sqsOrderData) as AWS.SQS.SendMessageResult;
+                console.log(`OrdersSvc | SUCCESS: ${sendSqsMessage.MessageId}`);
 
-
-            sendSqsMessage.then((data: any) => {
-                console.log(`OrdersSvc | SUCCESS: ${data.MessageId}`);
                 return {
                     statusCode: 200,
                     headers: {},
                     body: {
                         message: "Thank you for your order. Check you inbox for the confirmation email.",
-                        eventId: data.MessageId
+                        eventId: sendSqsMessage.MessageId
                     }
                 }
-            }).catch((err: Error) => {
+            } catch (err) {
                 console.log(`OrdersSvc | ERROR: ${err}`);
 
                 // Send email to emails API
@@ -79,10 +78,9 @@ exports.handler = async function (event: APIGatewayEvent, context: Context): Pro
                         message: "We ran into an error. Please try again."
                     }
                 }
-
-
-            });
+            }
         }
+
 
         if (method === "DELETE") {
             // DELETE /name
