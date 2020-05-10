@@ -1,8 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
 
-const port = process.argv.slice(2)[0];
 const app = express();
+dotenv.config();
+const port = process.env.PORT
 
 const messager = require("./messager")
 

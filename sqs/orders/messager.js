@@ -6,7 +6,7 @@ AWS.config.update({ region: 'eu-central-1' });
 
 // Create an SQS service object
 const sqs = new AWS.SQS();
-const queueUrl = process.env.SQS_URL;
+const queueUrl = process.env.SQS_QUEUE_URL;
 
 
 // the new endpoint

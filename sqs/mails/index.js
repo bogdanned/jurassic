@@ -1,9 +1,11 @@
 const AWS = require('aws-sdk');
 const { Consumer } = require('sqs-consumer');
 const nodemailer = require('nodemailer');
+const dotenv = require('dotenv');
 
 // Configure the region
 AWS.config.update({ region: 'eu-central-1' });
+dotenv.config();
 
 const queueUrl = process.env.SQS_QUEUE_URL;
 
