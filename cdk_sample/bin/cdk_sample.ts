@@ -5,7 +5,7 @@ import { CdkSampleStack } from '../lib/cdk_sample-stack';
 const app = new cdk.App();
 new CdkSampleStack(app, 'CdkSampleStack', {
     env: {
-        region: process.env.AWS_DEFAULT_REGION,
+        region: "eu-central-1",
         account: process.env.AWS_ACCOUNT
     }
 });
