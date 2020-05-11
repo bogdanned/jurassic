@@ -59,7 +59,7 @@ export default class CdkServerlessStack extends cdk.Stack {
     const api = new apigateway.LambdaRestApi(this, "orders-api", {
       restApiName: "Order Service",
       description: "This service manages orders.",
-      orderHandler,
+      handler: orderHandler,
     });
 
     // api.root.addMethod('ANY');
