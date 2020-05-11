@@ -1,26 +1,14 @@
 {
-    "compilerOptions": {
-        "target": "ES6",
-        "module": "commonjs",
-        "lib": [
-            "es2018"
-        ],
-        "strict": true,
-        "noImplicitAny": true,
-        "typeRoots": [
-            "./node_modules/@types"
-        ],
-        "types": [
-            "node"
-        ],
-        "outDir": "dist"
-    },
-    "exclude": [
-        "node_modules",
-        "cdk.out"
-    ],
-    "include": [
-        "src/**/*",
-        "infrastructure/**/*"
-    ]
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "lib": ["es2018"],
+    "strict": true,
+    "noImplicitAny": true,
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["node"],
+    "outDir": "dist"
+  },
+  "exclude": ["node_modules", "cdk.out"],
+  "include": ["src/**/*", "infrastructure/**/*"]
 }
