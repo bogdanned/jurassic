@@ -22,6 +22,7 @@ exports.handler = async function (
     if (method === "POST") {
       // POST /name
       var orderData = {
+        id: "XXXX",
         userEmail: "default@default.com",
         itemName: "default product",
         itemPrice: "0",

@@ -4,9 +4,11 @@
   "description": "A serverless event-driven mail sender.",
   "main": "index.js",
   "scripts": {
+    "lambda:dependencies": "cd ./src && npm install && cd ..",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "compile": "tsc",
-    "deploy": "tsc && cdk deploy"
+    "compile": "npm run lambda:dependencies && tsc && cp -rv src/node_modules dist/src/node_modules",
+    "deploy": "tsc && cdk deploy",
+    "test": "npm run compile && node test"
   },
   "author": "",
   "license": "ISC",

@@ -5,10 +5,11 @@
     "lib": ["es2018"],
     "strict": true,
     "noImplicitAny": true,
+    "esModuleInterop": true,
     "typeRoots": ["./node_modules/@types"],
     "types": ["node"],
     "outDir": "dist"
   },
-  "exclude": ["node_modules", "cdk.out"],
+  "exclude": ["cdk.out"],
   "include": ["src/**/*", "infrastructure/**/*"]
 }
