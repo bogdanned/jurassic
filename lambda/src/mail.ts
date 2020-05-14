@@ -1,6 +1,7 @@
 import { SQSEvent, Context, SQSRecord } from "aws-lambda";
 import sendMail from "./utils/sendMail";
 
+
 exports.handler = async function (
   event: SQSEvent,
   _context: Context
@@ -25,7 +26,7 @@ exports.handler = async function (
       try {
         await sendMail({
           to: sqsMessage.userEmail,
-          subject: "Order Received: " + sqsMessage.id,
+          subject: "Order Received",
           text: `<p>Hi ${sqsMessage.userEmail}.</p. <p>Your order of ${sqsMessage.itemsQuantity} ${sqsMessage.itemName} has been received and is being processed.</p> <p> Thank you for shopping with us! </p>`, // Plain text body
         });
       } catch (e) {

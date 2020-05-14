@@ -2,14 +2,6 @@ import sgMail from "@sendgrid/mail";
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
 
-const msg = {
-  to: "test@example.com",
-  from: "test@example.com",
-  subject: "Sending with Twilio SendGrid is Fun",
-  text: "and easy to do anywhere, even with Node.js",
-  html: "<strong>and easy to do anywhere, even with Node.js</strong>",
-};
-
 interface EmailMessage {
   to: string;
   subject: string;
@@ -23,7 +15,7 @@ export default async (msg: EmailMessage) => {
       from: "bogdanned32@gmail.com",
       subject: msg.subject,
       text: msg.text,
-      html: "<strong>and easy to do anywhere, even with Node.js</strong>",
+      html: msg.text,
     });
   } catch (e) {
     console.error(e);
